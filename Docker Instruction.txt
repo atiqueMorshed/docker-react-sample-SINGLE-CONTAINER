@@ -1,0 +1,51 @@
+- Create .env and add the following for react auto change feature
+-------------------------------
+  CHOKIDAR_USEPOLLING=true
+-------------------------------
+
+- Create Dockerfile in root directory
+
+  Dockerfile CONTENT:
+
+-------------------------------
+  FROM node:alpine
+
+  WORKDIR /usr/app
+
+  COPY package.json .
+
+  COPY yarn.lock .
+
+  RUN npm install
+
+  COPY . .
+
+  CMD ["yarn", "start"]
+-------------------------------
+
+
+
+- Create .dockerignore
+-------------------------------
+  node_modules
+  Dockerfile
+-------------------------------
+
+
+- Build image
+----------------------------------
+  -> docker build -t image-name .
+----------------------------------
+
+
+- list docker images
+-------------------------------
+  -> docker images
+-------------------------------
+
+- Create the container from image and run
+----------------------------------------------------------------------------------------------------------------------------
+  -> docker run -v ABSOLUTE_PATH:/usr/app -v /usr/app/node_modules -it --name container-name -p 3000:3000 image-name
+----------------------------------------------------------------------------------------------------------------------------
+  -it : interactive mode
+  -p  : port mapping
